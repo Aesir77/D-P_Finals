@@ -1,22 +1,21 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 public class Menu_Script : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private GameObject Main_Menu;
     void Start()
     {
-
+       
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    
     public void StartGame()
     {
-        //Switch Camera
+       
     }
 
     public void Settings(string SceneName)
