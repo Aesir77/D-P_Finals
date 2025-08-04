@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using Cinemachine;
 using System.Collections.Generic;
 using StarterAssets;
+using UnityEngine.Playables;
 
 public class Menu_Script : MonoBehaviour
 {
@@ -10,35 +11,51 @@ public class Menu_Script : MonoBehaviour
     [SerializeField] private GameObject Main_Menu;
     [SerializeField] private GameObject PlayerFreeze;
     [SerializeField] private GameObject SettingsView;
-    
-    #endregion
 
+    #endregion
     #region CameraSwitching
     public CinemachineVirtualCamera PlayerCam;
     public CinemachineVirtualCamera MainMenuCam;
     #endregion
+    #region EnemySpawn and Timer
+  [SerializeField] private Spawn_Manager spawn_Manager;
+    [SerializeField] private Dialogue_and_Timer DialogueBox;
+  [SerializeField] private GameObject Dialogue_andTimer;
+    
+    #endregion
     void Start()
     {
-       Main_Menu = GameObject.Find("MAIN_MENU");
-       PlayerFreeze = GameObject.Find("PlayerCapsule");
+        Main_Menu = GameObject.Find("Main_Screen");
+        PlayerFreeze = GameObject.Find("PlayerCapsule");
         SettingsView = GameObject.Find("SETTINGS");
+        spawn_Manager = GameObject.Find("SpawnPoint").GetComponent<Spawn_Manager>();
+
+       DialogueBox = GameObject.Find("DIALOGUE_BOX").GetComponent<Dialogue_and_Timer>();
+        Dialogue_andTimer = GameObject.Find("HIDING_TIMER(For Player)");
+
+
+        Dialogue_andTimer.SetActive(false);
 
         PlayerFreeze.SetActive(false);
         SettingsView.SetActive(false);
     }
 
-    
+
     public void StartGame()
     {
-       Camera_Manager.SwitchCamera(PlayerCam);
+        Camera_Manager.SwitchCamera(PlayerCam);
         StarterAssetsInputs.SetCursorState(true);
-        Main_Menu.SetActive(false);
         PlayerFreeze.SetActive(true);
+        Dialogue_andTimer.SetActive(true);
+        Main_Menu.SetActive(false);
+        DialogueBox.StartCoroutine(DialogueBox.PlayDialogue()); //Dialogue and timer on game start
+        spawn_Manager.SpawnRats(); //spawn Rats on game start
+
     }
 
     public void Settings()
     {
-       SettingsView.SetActive(true);
+        SettingsView.SetActive(true);
     }
 
     public void ExitSettings()

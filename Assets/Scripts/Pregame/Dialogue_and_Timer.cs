@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.UIElements;
 
 public class Dialogue_and_Timer : MonoBehaviour
 {
@@ -12,17 +13,15 @@ public class Dialogue_and_Timer : MonoBehaviour
     public float fadeDuration  = 1f;
     public float displayDuration = 10f;
     public int Timer = 10;
+ 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (Dialogues.Length > 0)
-        {
-            StartCoroutine(PlayDialogue());
-        }
+       
     }
 
-   IEnumerator PlayDialogue()
+  public IEnumerator PlayDialogue()
     {
         foreach (string dialogue in Dialogues)
         {
@@ -31,18 +30,18 @@ public class Dialogue_and_Timer : MonoBehaviour
             yield return new WaitForSeconds(displayDuration);
            yield return StartCoroutine(FadeOutDialogue());
             yield return new WaitForSeconds(fadeDuration);
+           
         }
-
-        yield return StartCoroutine(FadeInDialogue());
+       
         yield return StartCoroutine(downTimer());
         yield return StartCoroutine(FadeOutDialogue());
 
-        
-         
+
+
     }
 
 
-   IEnumerator FadeInDialogue()
+ public  IEnumerator FadeInDialogue()
     {
         dialogueGroup.alpha = 0f;
         float elapsedTime = 0f;
@@ -54,7 +53,7 @@ public class Dialogue_and_Timer : MonoBehaviour
         }
     }
 
-    IEnumerator FadeOutDialogue()
+ public  IEnumerator FadeOutDialogue()
     {         float elapsedTime = 0f;
         while (elapsedTime < fadeDuration)
         {
@@ -65,12 +64,14 @@ public class Dialogue_and_Timer : MonoBehaviour
         dialogueGroup.alpha = 0f; // Ensure it is fully transparent after fading out
     }
 
-    IEnumerator downTimer()
+ public   IEnumerator downTimer()
     {        
         for (int time = Timer; time >= 0; time--)
         {
             dialogueText.text = "The Exterminator will arrive in " + time + " seconds.";
-            yield return new WaitForSeconds(1f);
+            yield return StartCoroutine(FadeInDialogue());
+            yield return new WaitForSeconds(0.5f);
+           
         }
        
         blackScreen.SetActive(false);
