@@ -13,12 +13,16 @@ public class Dialogue_and_Timer : MonoBehaviour
     public float fadeDuration  = 1f;
     public float displayDuration = 10f;
     public int Timer = 10;
- 
+
+    public GameObject player; // Reference to the player GameObject
+    private MonoBehaviour movementScript; // Reference to the player's movement script
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       
+       movementScript = player.GetComponent<MonoBehaviour>();
+       movementScript.enabled = false; // Disable player movement script at the start
     }
 
   public IEnumerator PlayDialogue()
@@ -36,6 +40,10 @@ public class Dialogue_and_Timer : MonoBehaviour
         yield return StartCoroutine(downTimer());
         yield return StartCoroutine(FadeOutDialogue());
 
+        if (movementScript != null)
+        {
+            movementScript.enabled = true; // Enable player movement script after dialogue and timer
+        }
 
 
     }
@@ -70,8 +78,9 @@ public class Dialogue_and_Timer : MonoBehaviour
         {
             dialogueText.text = "The Exterminator will arrive in " + time + " seconds.";
             yield return StartCoroutine(FadeInDialogue());
-            yield return new WaitForSeconds(0.25f);
-           
+            yield return new WaitForSeconds(0.1f); 
+
+
         }
        
         blackScreen.SetActive(false);
