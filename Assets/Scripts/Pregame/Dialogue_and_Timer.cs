@@ -78,7 +78,7 @@ public class Dialogue_and_Timer : MonoBehaviour
         {
             dialogueText.text = "The Exterminator will arrive in " + time + " seconds.";
             yield return StartCoroutine(FadeInDialogue());
-            
+            yield return new WaitForSeconds(0.1f); 
 
 
         }

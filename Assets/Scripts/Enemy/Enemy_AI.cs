@@ -6,6 +6,8 @@ public class Enemy_AI : MonoBehaviour
     private NavMeshAgent agent;
     private Hiding_Script assignedSpot;
     private bool spotAssigned = false;
+    private Enemy_ChangeObject disguiseChanged;
+    private bool hasChanged = false;
 
     void Start()
     {
@@ -13,6 +15,15 @@ public class Enemy_AI : MonoBehaviour
 
         // Try to find an available hiding spot
         AssignHidingSpot();
+    }
+
+    private void Update()
+    {
+        if (spotAssigned && !hasChanged && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        {
+            GetComponent<Enemy_ChangeObject>().ChangeForm(); // Change form when reaching the hiding spot
+            hasChanged = true;
+        }
     }
 
     void AssignHidingSpot()
@@ -39,4 +50,7 @@ public class Enemy_AI : MonoBehaviour
             Debug.LogWarning($"{gameObject.name} could not find a free hiding spot!");
         }
     }
+
+    
 }
+
