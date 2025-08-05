@@ -48,8 +48,7 @@ public class EnemyShoot_AndRun : MonoBehaviour
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 direction = (player.position - bulletSpawnPoint.position).normalized;
-            rb.AddForce(direction * 10f, ForceMode.Impulse); // Adjust force as needed
+            rb.linearVelocity = (player.position - bulletSpawnPoint.position).normalized * 20f; // Adjust speed as needed
         }
         yield return new WaitForSeconds(shootDelay);
 

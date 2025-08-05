@@ -74,7 +74,7 @@ public class Dialogue_and_Timer : MonoBehaviour
 
  public   IEnumerator downTimer()
     {        
-        for (int time = Timer; time > 1; time--)
+        for (int time = Timer; time >= 0; time--)
         {
             dialogueText.text = "The Exterminator will arrive in " + time + " seconds.";
             yield return StartCoroutine(FadeInDialogue());
