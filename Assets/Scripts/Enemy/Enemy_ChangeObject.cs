@@ -37,8 +37,8 @@ public class Enemy_ChangeObject : MonoBehaviour
         GameObject disguise = Instantiate(objectsToChange[randomIndex], transform);
 
 
-        disguise.transform.localPosition = Vector3.zero; // Reset local position to ensure it aligns with the parent
-        disguise.transform.localRotation = Quaternion.identity; // Reset local rotation to ensure it aligns with the parent
+        disguise.transform.localPosition = new Vector3(0, -0.5f, 0); // Lower the y to make the disguise sit on the ground
+        disguise.transform.localRotation = new Quaternion(0, 0, 0, 1); // Reset rotation to identity
         disguise.transform.localScale = Vector3.one; // Reset local scale to ensure it matches the parent
 
         currentObject = disguise;

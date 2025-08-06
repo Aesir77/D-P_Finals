@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7effecea20cfbbf43ab0765d424dc217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 15
+  detectionRange: 12.5
   shootDelay: 1.5
   bulletPrefab: {fileID: 2992972060221015335, guid: b5dac0cd5d14c154cb47ea7c21e46beb, type: 3}
   bulletSpawnPoint: {fileID: 8422499194294859531}
@@ -307,5 +307,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectsToChange:
-  - {fileID: 5423237472049980439, guid: ec66da1cc3aac7f4fb8b6c62c545495c, type: 3}
+  - {fileID: 1837272271207062286, guid: 0ed5d2a75c5ebb348aaa79976271332b, type: 3}
+  - {fileID: 321293154530130155, guid: 28262954b3227984bb789a4921f698e5, type: 3}
+  - {fileID: 2122925434784888599, guid: f69624d9b58313044ae81c476bea608a, type: 3}
+  - {fileID: 5619415822086512122, guid: 62205a3b1e314584ba9b0ccd7f1c5e3e, type: 3}
+  - {fileID: 5149113796053628680, guid: 6f173c5b7bb94c348a7bf73a7850dd22, type: 3}
   visualModel: {fileID: 128040452568391623}
