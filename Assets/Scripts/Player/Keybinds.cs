@@ -23,6 +23,10 @@ public class Keybinds : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 Time.timeScale = 1f; // Resume the game
+                if (PlayerMovementScript != null)
+                {
+                    PlayerMovementScript.enabled = true; // Enable player movement script when settings are closed
+                }
             }
             else
             {
