@@ -13,12 +13,15 @@ public class Enemy_AI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
 
-        // Try to find an available hiding spot
-        AssignHidingSpot();
+        AssignHidingSpot(); // Try to find an available hiding spot
+
+
     }
 
     private void Update()
     {
+
+
         if (spotAssigned && !hasChanged && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             GetComponent<Enemy_ChangeObject>().ChangeForm(); // Change form when reaching the hiding spot
@@ -51,6 +54,14 @@ public class Enemy_AI : MonoBehaviour
         }
     }
 
-    
+    private void OnDestroy()
+    {
+        if (assignedSpot != null && assignedSpot.IsClaimed())
+        {
+            assignedSpot.Release(); // Release the hiding spot when the enemy is destroyed
+        }
+
+
+    }
 }
 

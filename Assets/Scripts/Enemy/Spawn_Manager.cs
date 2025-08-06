@@ -21,4 +21,13 @@ public class Spawn_Manager : MonoBehaviour
             Instantiate(RatPrefab, spawnPosition, Quaternion.identity);
         }
     }
+
+    public void ClearRats() //will only be used when returning to the main menu
+    {
+               GameObject[] rats = GameObject.FindGameObjectsWithTag("Rat");
+        foreach (GameObject rat in rats)
+        {
+            Destroy(rat);
+        }
+    }
 }
