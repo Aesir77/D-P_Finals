@@ -7,12 +7,6 @@ public class Spawn_Manager : MonoBehaviour
     public int no_ofRats = 10;
     public float spawnRange = 5f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
     public void SpawnRats()
     {
         for (int i = 0; i < no_ofRats; i++)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using StarterAssets;
 using UnityEngine.Playables;
 
+
 public class Menu_Script : MonoBehaviour
 {
     #region Settings
@@ -55,6 +56,8 @@ public class Menu_Script : MonoBehaviour
         In_Game_Settings.SetActive(false);
         PlayerFreeze.SetActive(false);
         SettingsView.SetActive(false);
+
+      
     }
 
 
@@ -116,6 +119,21 @@ public class Menu_Script : MonoBehaviour
     }
 #endif
 
+    }
+
+    //Game over screen
+    public void Retry()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Camera_Manager.SwitchCamera(PlayerCam);
+        StarterAssetsInputs.SetCursorState(true);
+        PlayerUI.SetActive(true);
+        Dialogue_andTimer.SetActive(true);
+        RemainingUI.SetActive(true);
+        Main_Menu.SetActive(false);
+        DialogueBox.StartCoroutine(DialogueBox.PlayDialogue()); //Dialogue and timer on game start
+        spawn_Manager.SpawnRats(); //spawn Rats on game start
     }
 }
 

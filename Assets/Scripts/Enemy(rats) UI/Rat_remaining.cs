@@ -5,13 +5,16 @@ public class Rat_remaining : MonoBehaviour
 {
     public string EnemyTag = "Rat";
     public TMP_Text ratsRemaining;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public GameObject GameWinScreen;
 
-    // Update is called once per frame
+    private bool hasWon = false;
+
+
+     void Start()
+    {
+        GameWinScreen = GameObject.Find("GAME WIN UI");
+        GameWinScreen.SetActive(false);
+    }
     void Update()
     {
         GameObject[] rats = GameObject.FindGameObjectsWithTag(EnemyTag);
@@ -25,6 +28,19 @@ public class Rat_remaining : MonoBehaviour
         {
             Debug.LogWarning("ratsRemaining TextMeshProUGUI is not assigned in the inspector.");
         }
+
+        if (RatCount <= 0 && !hasWon)
+        {
+            GameWin();
+        }
+    }
+
+
+    void GameWin()
+    {
+        hasWon = true;
+        GameWinScreen.SetActive(true);
+        Time.timeScale = 0f; //pause
     }
 
 }
