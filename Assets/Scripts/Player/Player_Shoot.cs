@@ -10,13 +10,12 @@ public class Player_Shoot : MonoBehaviour
     [SerializeField] private float netLifetime = 2f; 
     [SerializeField] private Vector3 lastPos, simulatedVelocity;
    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+  
     void Start()
     {
         lastPos = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
 

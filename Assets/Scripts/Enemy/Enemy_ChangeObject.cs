@@ -7,19 +7,6 @@ public class Enemy_ChangeObject : MonoBehaviour
     public GameObject visualModel;
 
 
-
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void ChangeForm()
     {
         if (objectsToChange == null || objectsToChange.Length == 0)
