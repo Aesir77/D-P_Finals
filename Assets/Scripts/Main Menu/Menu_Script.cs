@@ -35,8 +35,15 @@ public class Menu_Script : MonoBehaviour
     [SerializeField] private MonoBehaviour movementScript;
     [SerializeField] private GameObject GameWin, GameOver;
     [SerializeField] private Player_Shoot PlayerShootScript;
+    [SerializeField] private GameObject StarttheGame, SettingsText, QuitText, Title;
 
 
+
+    #endregion
+
+    #region Audio
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip ButtonClick, MainMenuMusic, MainGameMusic;
 
     #endregion
     void Start()
@@ -57,10 +64,16 @@ public class Menu_Script : MonoBehaviour
         Dialogue_andTimer = GameObject.Find("HIDING_TIMER(For Player)");
         movementScript = GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>();
         PlayerShootScript = GameObject.Find("PlayerCapsule").GetComponent<Player_Shoot>();
+        StarttheGame = GameObject.Find("Start");
+        SettingsText = GameObject.Find("Settings");
+        QuitText = GameObject.Find("Quit");
+        Title = GameObject.Find("Title");
+
+
 
         #endregion
 
-
+        audioSource.PlayOneShot(MainMenuMusic); // Play main menu music
         movementScript.enabled = false;
         Dialogue_andTimer.SetActive(false);
         RemainingUI.SetActive(false);
@@ -74,6 +87,7 @@ public class Menu_Script : MonoBehaviour
 
     public void StartGame()
     {
+        audioSource.PlayOneShot(ButtonClick); // Play button click sound
         Camera_Manager.SwitchCamera(PlayerCam);
         StarterAssetsInputs.SetCursorState(true);
         PlayerUI.SetActive(true);
@@ -83,12 +97,15 @@ public class Menu_Script : MonoBehaviour
         DialogueBox.StartCoroutine(DialogueBox.PlayDialogue()); //Dialogue and timer on game start
         spawn_Manager.SpawnRats(); //spawn Rats on game start
         EnemyLeftUI.RatRemaining(); // Initialize the rats remaining UI
-       
+        audioSource.Stop(); // Stop main menu music when starting the game
+        audioSource.PlayOneShot(MainGameMusic); // Play game background music
+
 
     }
 
     public void ReturnToMainMenu()
     {
+        audioSource.PlayOneShot(ButtonClick); // Play button click sound
         Main_Menu.SetActive(true);
         Camera_Manager.SwitchCamera(MainMenuCam);
         StarterAssetsInputs.SetCursorState(false);
@@ -104,23 +121,35 @@ public class Menu_Script : MonoBehaviour
 
     public void Settings()
     {
+        audioSource.PlayOneShot(ButtonClick); // Play button click sound
         SettingsView.SetActive(true);
+        StarttheGame.SetActive(false); 
+        SettingsText.SetActive(false); 
+        QuitText.SetActive(false); 
+        Title.SetActive(false); 
+
     }
 
     public void ExitSettings()
     {
+        audioSource.PlayOneShot(ButtonClick); // Play button click sound
         SettingsView.SetActive(false);
-        Time.timeScale = 1f; // Resume the game
+        Time.timeScale = 1f; 
+        SettingsText.SetActive(true);
+        StarttheGame.SetActive(true); 
+        QuitText.SetActive(true); 
+        Title.SetActive(true); 
     }
 
-    public void ExitIngameSettings() //for IngameSettings that has the return back to main menu button
+    public void ExitIngameSettings() 
     {
+        audioSource.PlayOneShot(ButtonClick); // Play button click sound
         In_Game_Settings.SetActive(false);
-        Time.timeScale = 1f; // Resume the game
-        PlayerMovement.enabled = true; // Enable player movement script when settings are closed
-        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor
-        Cursor.visible = false; // Hide the cursor
-        PlayerShootScript.enabled = true; // Enable player shooting script when settings are closed
+        Time.timeScale = 1f; 
+        PlayerMovement.enabled = true; 
+        Cursor.lockState = CursorLockMode.Locked; 
+        Cursor.visible = false; 
+        PlayerShootScript.enabled = true; 
 
     }
     public void Quit()
@@ -128,6 +157,7 @@ public class Menu_Script : MonoBehaviour
 
 #if UNITY_EDITOR
         // Stop playing the scene in the Unity Editor
+        audioSource.PlayOneShot(ButtonClick); // Play button click sound
         UnityEditor.EditorApplication.isPlaying = false;
 #else
     // Quit the application
@@ -142,7 +172,8 @@ public class Menu_Script : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        
+        audioSource.PlayOneShot(ButtonClick); // Play button click sound
+
     }
 }
 
