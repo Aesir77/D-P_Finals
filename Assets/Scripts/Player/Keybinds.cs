@@ -11,7 +11,7 @@ public class Keybinds : MonoBehaviour
     {
         Settings_View = GameObject.Find("INGAMESETTINGS");
         PlayerMovementScript = GameObject.Find("PlayerCapsule").GetComponent<MonoBehaviour>();
-        PlayerShootScript = GameObject.Find("PlayerCapsule").GetComponent<Player_Shoot>();
+        PlayerShootScript = GameObject.Find("PlayerCapsule").GetComponent<Player_Shoot>();  
     }
 
  
@@ -25,7 +25,7 @@ public class Keybinds : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 Time.timeScale = 1f; // Resume the game
-                PlayerShootScript.enabled = true; 
+                PlayerShootScript.enabled = true; // Enable player shooting script when settings are closed
                 if (PlayerMovementScript != null)
                 {
                     PlayerMovementScript.enabled = true; // Enable player movement script when settings are closed
@@ -35,9 +35,9 @@ public class Keybinds : MonoBehaviour
             {
                 Settings_View.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
-                PlayerShootScript.enabled = false; 
                 Cursor.visible = true;
                 Time.timeScale = 0f; // Pause the game
+                PlayerShootScript.enabled = false; // Disable player shooting script when settings are open
                 if (PlayerMovementScript != null)
                 {
                     PlayerMovementScript.enabled = false; // Disable player movement script when settings are open

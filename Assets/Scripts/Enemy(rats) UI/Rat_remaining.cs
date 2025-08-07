@@ -6,6 +6,7 @@ public class Rat_remaining : MonoBehaviour
     public string EnemyTag = "Rat";
     public TMP_Text ratsRemaining;
     public GameObject GameWinScreen;
+    public GameObject PlayerUI;
 
     private bool hasWon = false;
     private bool gameStarted = false;
@@ -14,6 +15,7 @@ public class Rat_remaining : MonoBehaviour
     {
         GameWinScreen = GameObject.Find("GAME WIN UI");
         GameWinScreen.SetActive(false);
+        PlayerUI = GameObject.Find("Player UI");
     }
     void Update()
     {
@@ -42,6 +44,7 @@ public class Rat_remaining : MonoBehaviour
 
     void GameWin()
     {
+        PlayerUI.SetActive(false); // Hide the player UI
         hasWon = true;
         GameWinScreen.SetActive(true);
         Time.timeScale = 0f; //pause
