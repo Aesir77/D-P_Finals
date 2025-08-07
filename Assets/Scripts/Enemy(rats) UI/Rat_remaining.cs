@@ -8,30 +8,34 @@ public class Rat_remaining : MonoBehaviour
     public GameObject GameWinScreen;
 
     private bool hasWon = false;
+    private bool gameStarted = false;
 
-
-     void Start()
+    void Start()
     {
         GameWinScreen = GameObject.Find("GAME WIN UI");
         GameWinScreen.SetActive(false);
     }
     void Update()
     {
-        GameObject[] rats = GameObject.FindGameObjectsWithTag(EnemyTag);
-        int RatCount = rats.Length;
+        if (!gameStarted) return;
+        {
 
-        if (ratsRemaining != null)
-        {
-            ratsRemaining.text = "Rats Remaining: " + RatCount.ToString();
-        }
-        else
-        {
-            Debug.LogWarning("ratsRemaining TextMeshProUGUI is not assigned in the inspector.");
-        }
+            GameObject[] rats = GameObject.FindGameObjectsWithTag(EnemyTag);
+            int RatCount = rats.Length;
 
-        if (RatCount <= 0 && !hasWon)
-        {
-            GameWin();
+            if (ratsRemaining != null)
+            {
+                ratsRemaining.text = "Rats Remaining: " + RatCount.ToString();
+            }
+            else
+            {
+                Debug.LogWarning("ratsRemaining TextMeshProUGUI is not assigned in the inspector.");
+            }
+
+            if (RatCount <= 0 && !hasWon)
+            {
+                GameWin();
+            }
         }
     }
 
@@ -41,6 +45,11 @@ public class Rat_remaining : MonoBehaviour
         hasWon = true;
         GameWinScreen.SetActive(true);
         Time.timeScale = 0f; //pause
+    }
+
+    public void RatRemaining()
+    {
+        gameStarted = true;
     }
 
 }

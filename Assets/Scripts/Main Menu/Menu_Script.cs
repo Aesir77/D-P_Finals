@@ -4,6 +4,7 @@ using Cinemachine;
 using System.Collections.Generic;
 using StarterAssets;
 using UnityEngine.Playables;
+using Unity.VisualScripting;
 
 
 public class Menu_Script : MonoBehaviour
@@ -31,25 +32,33 @@ public class Menu_Script : MonoBehaviour
     [SerializeField] private GameObject RemainingUI;
     [SerializeField] private GameObject In_Game_Settings;
     [SerializeField] private MonoBehaviour PlayerMovement;
+    [SerializeField] private Rat_remaining EnemyLeftUI; //this is needed so that it doesnt automatically show the game win screen because the rats is 0
+    [SerializeField] private TimeLeft TimeLeft;
+    [SerializeField] private GameObject GameWin;
+  
 
     #endregion
     void Start()
     {
         #region Finding the GameObjects
+       
         Main_Menu = GameObject.Find("Main_Screen");
         PlayerFreeze = GameObject.Find("PlayerCapsule");
         SettingsView = GameObject.Find("SETTINGS");
-        spawn_Manager = GameObject.Find("SpawnPoint").GetComponent<Spawn_Manager>();
+        spawn_Manager = GameObject.Find("Spawn Manager (Spawnpoint)").GetComponent<Spawn_Manager>();
         PlayerUI = GameObject.Find("Player UI");
         RemainingUI = GameObject.Find("RemainingUI");
         In_Game_Settings = GameObject.Find("INGAMESETTINGS");
         PlayerMovement = GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>();
+        EnemyLeftUI = GameObject.Find("EnemyLeft_UI").GetComponent<Rat_remaining>();
+        TimeLeft = GameObject.Find("TimeLeft UI").GetComponent<TimeLeft>();
 
         DialogueBox = GameObject.Find("DIALOGUE_BOX").GetComponent<Dialogue_and_Timer>();
         Dialogue_andTimer = GameObject.Find("HIDING_TIMER(For Player)");
 
         #endregion
 
+       
         Dialogue_andTimer.SetActive(false);
         RemainingUI.SetActive(false);
         PlayerUI.SetActive(false);
@@ -57,7 +66,7 @@ public class Menu_Script : MonoBehaviour
         PlayerFreeze.SetActive(false);
         SettingsView.SetActive(false);
 
-      
+
     }
 
 
@@ -72,7 +81,8 @@ public class Menu_Script : MonoBehaviour
         Main_Menu.SetActive(false);
         DialogueBox.StartCoroutine(DialogueBox.PlayDialogue()); //Dialogue and timer on game start
         spawn_Manager.SpawnRats(); //spawn Rats on game start
-       
+        EnemyLeftUI.RatRemaining(); // Initialize the rats remaining UI
+        TimeLeft.StartTimer(); // Start the timer
 
     }
 
@@ -87,6 +97,7 @@ public class Menu_Script : MonoBehaviour
         RemainingUI.SetActive(false);
         spawn_Manager.ClearRats(); // Clear all spawned rats when returning to main menu
         In_Game_Settings.SetActive(false);
+        GameWin.SetActive(false); 
         Time.timeScale = 1f; // Resume the game if paused
     }
 

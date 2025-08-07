@@ -6,11 +6,13 @@ public class Player_Health : MonoBehaviour
     public int Maximum_Health = 100;
     private int currentHealth;
     public GameObject player;
+    public TimeLeft GameOverScreen;
 
     public TMP_Text healthText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        GameOverScreen = GameObject.Find("TimeLeft UI").GetComponent<TimeLeft>();
         currentHealth = Maximum_Health;
         UpdateHealthText();
     }
@@ -38,8 +40,7 @@ public class Player_Health : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("Player has died.");
-        player.SetActive(false);
+       GameOverScreen.GameOver();
     }
 
 

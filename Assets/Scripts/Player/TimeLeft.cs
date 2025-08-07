@@ -7,26 +7,31 @@ public class TimeLeft : MonoBehaviour
     public float timeLeft = 300f; // Time left in seconds
     public GameObject GameOverScreen;
 
+    private bool hasStarted = false;
     private bool gameOver = false;
 
      void Start()
     {
+      
         GameOverScreen = GameObject.Find("GAME OVER UI");
         GameOverScreen.SetActive(false);
     }
     void Update()
     {
-        if (gameOver) return;
-
-        timeLeft -= Time.deltaTime; 
-
-        if (timeLeft <= 0f)
+        if (!hasStarted) return;
         {
-            timeLeft = 0f;
-            GameOver();
+            if (gameOver) return;
 
+            timeLeft -= Time.deltaTime;
+
+            if (timeLeft <= 0f)
+            {
+                timeLeft = 0f;
+                GameOver();
+
+            }
+            TimerDisplay();
         }
-        TimerDisplay();
     }
    
 
@@ -40,13 +45,19 @@ public class TimeLeft : MonoBehaviour
 
     
 
-    void GameOver()
+   public void GameOver()
     {
         gameOver = true; 
         Time.timeScale = 0f; //pause
         timeLeftText.text = "Game Over! Time's Up!"; 
         GameOverScreen.SetActive(true); 
         
+    }
+
+
+public void StartTimer()
+    {
+        hasStarted = true; 
     }
 }
 
