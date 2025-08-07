@@ -29,6 +29,7 @@ public class Menu_Script : MonoBehaviour
     [SerializeField] private GameObject PlayerUI;
     [SerializeField] private GameObject RemainingUI;
     [SerializeField] private GameObject In_Game_Settings;
+    [SerializeField] private MonoBehaviour PlayerMovement;
 
     #endregion
     void Start()
@@ -41,6 +42,7 @@ public class Menu_Script : MonoBehaviour
         PlayerUI = GameObject.Find("Player UI");
         RemainingUI = GameObject.Find("RemainingUI");
         In_Game_Settings = GameObject.Find("INGAMESETTINGS");
+        PlayerMovement = GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>();
 
         DialogueBox = GameObject.Find("DIALOGUE_BOX").GetComponent<Dialogue_and_Timer>();
         Dialogue_andTimer = GameObject.Find("HIDING_TIMER(For Player)");
@@ -100,6 +102,7 @@ public class Menu_Script : MonoBehaviour
     {
         In_Game_Settings.SetActive(false);
         Time.timeScale = 1f; // Resume the game
+        PlayerMovement.enabled = true; // Enable player movement script when settings are closed
     }
     public void Quit()
     {

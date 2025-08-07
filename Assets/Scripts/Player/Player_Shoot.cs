@@ -9,6 +9,7 @@ public class Player_Shoot : MonoBehaviour
     [SerializeField] private float shootForce = 10f;
     [SerializeField] private float netLifetime = 2f; 
     [SerializeField] private Vector3 lastPos, simulatedVelocity;
+   
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -40,15 +41,20 @@ public class Player_Shoot : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(screenCenter);
 
             Vector3 shootDirection = ray.direction.normalized;
-                
-           rb.linearVelocity = shootDirection * shootForce + simulatedVelocity; 
-            rb.angularVelocity = Vector3.zero; 
+            Vector3 FinalVelocity = shootDirection * shootForce + simulatedVelocity;
+            if (isValid(FinalVelocity))
+            {
+                rb.linearVelocity = FinalVelocity; 
+            }
+            rb.angularVelocity = Vector3.zero;
 
-            Destroy(net, netLifetime); // Destroy the net after a certain time
+                Destroy(net, netLifetime); // Destroy the net after a certain time
+
+           
         }
        
 
-        if (Time.deltaTime > 0)
+        if (Time.deltaTime > Mathf.Epsilon)
         {
             simulatedVelocity = (transform.position - lastPos) / Time.deltaTime; // Update simulated velocity
         }
@@ -56,5 +62,11 @@ public class Player_Shoot : MonoBehaviour
         {
             simulatedVelocity = Vector3.zero; // Reset if delta time is zero to avoid division by zero
         }
+    }
+
+    bool isValid(Vector3 valid)
+    {
+        return !(float.IsNaN(valid.x) || float.IsNaN(valid.y) || float.IsNaN(valid.z) ||
+                 float.IsInfinity(valid.x) || float.IsInfinity(valid.y) || float.IsInfinity(valid.z));
     }
 }
