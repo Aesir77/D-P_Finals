@@ -6,8 +6,8 @@ public class Player_Shoot : MonoBehaviour
 {
     [SerializeField] private GameObject netPrefab;
     [SerializeField] private Transform shootPoint;
-    [SerializeField] private float shootForce = 10f;
-    [SerializeField] private float netLifetime = 2f; 
+    [SerializeField] private float shootForce = 10f, nextshoot = 0.25f;
+    [SerializeField] private float netLifetime = 2f, shootCooldown = 1.25f; 
     [SerializeField] private Vector3 lastPos, simulatedVelocity;
    
   
@@ -21,9 +21,11 @@ public class Player_Shoot : MonoBehaviour
 
         simulatedVelocity = (transform.position - lastPos) / Time.deltaTime;
         lastPos = transform.position;
-        if (Input.GetMouseButtonDown(0)) // Left mouse button
+        if (Input.GetMouseButtonDown(0) && Time.time >= nextshoot) // Left mouse button
         {
             ShootNet();
+            nextshoot = Time.time + shootCooldown;
+
         }
     }
 

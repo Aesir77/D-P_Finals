@@ -12,7 +12,7 @@ public class Player_Health : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameOverScreen = GameObject.Find("TimeLeft UI").GetComponent<TimeLeft>();
+        GameOverScreen = GameObject.Find("Main Menu Manager").GetComponent<TimeLeft>();
         currentHealth = Maximum_Health;
         UpdateHealthText();
     }

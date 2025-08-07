@@ -4,12 +4,14 @@ using UnityEngine;
 public class Keybinds : MonoBehaviour
 {
     [SerializeField] private GameObject Settings_View;
-    [SerializeField] private MonoBehaviour PlayerMovementScript; 
-   
+    [SerializeField] private MonoBehaviour PlayerMovementScript;
+    [SerializeField] private Player_Shoot PlayerShootScript;
+
     void Start()
     {
         Settings_View = GameObject.Find("INGAMESETTINGS");
         PlayerMovementScript = GameObject.Find("PlayerCapsule").GetComponent<MonoBehaviour>();
+        PlayerShootScript = GameObject.Find("PlayerCapsule").GetComponent<Player_Shoot>();
     }
 
  
@@ -23,6 +25,7 @@ public class Keybinds : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 Time.timeScale = 1f; // Resume the game
+                PlayerShootScript.enabled = true; 
                 if (PlayerMovementScript != null)
                 {
                     PlayerMovementScript.enabled = true; // Enable player movement script when settings are closed
@@ -32,6 +35,7 @@ public class Keybinds : MonoBehaviour
             {
                 Settings_View.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
+                PlayerShootScript.enabled = false; 
                 Cursor.visible = true;
                 Time.timeScale = 0f; // Pause the game
                 if (PlayerMovementScript != null)

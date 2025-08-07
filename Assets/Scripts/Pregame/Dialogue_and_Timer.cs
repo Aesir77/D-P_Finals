@@ -19,6 +19,7 @@ public class Dialogue_and_Timer : MonoBehaviour
     public GameObject player; // Reference to the player GameObject
    [SerializeField] private MonoBehaviour PlayerShoot;
    [SerializeField] private MonoBehaviour movementScript; // Reference to the player's movement script
+    [SerializeField] private TimeLeft TimeLeft;
     
 
 
@@ -26,7 +27,9 @@ public class Dialogue_and_Timer : MonoBehaviour
    
     void Start()
     {
-       movementScript = player.GetComponent<FirstPersonController>();
+
+        TimeLeft = GameObject.Find("Main Menu Manager").GetComponent<TimeLeft>();
+        movementScript = player.GetComponent<FirstPersonController>();
        PlayerShoot = player.GetComponent<Player_Shoot>();
         movementScript.enabled = false; // Disable player movement script at the start
         PlayerShoot.enabled = false; // Disable player shooting script at the start
@@ -46,6 +49,7 @@ public class Dialogue_and_Timer : MonoBehaviour
        
         yield return StartCoroutine(downTimer());
         yield return StartCoroutine(FadeOutDialogue());
+        TimeLeft.StartTimer();
 
         if (movementScript != null)
         {
@@ -58,6 +62,8 @@ public class Dialogue_and_Timer : MonoBehaviour
         }
 
         yield return StartCoroutine(PlayIntroduction());
+
+        
 
     }
 

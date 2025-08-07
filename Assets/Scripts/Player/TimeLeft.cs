@@ -20,12 +20,14 @@ public class TimeLeft : MonoBehaviour
     {
         if (!hasStarted) return;
         {
+            
             if (gameOver) return;
 
             timeLeft -= Time.deltaTime;
 
             if (timeLeft <= 0f)
             {
+                Debug.Log("Game Over");
                 timeLeft = 0f;
                 GameOver();
 
@@ -50,6 +52,7 @@ public class TimeLeft : MonoBehaviour
         gameOver = true; 
         Time.timeScale = 0f; //pause
         timeLeftText.text = "Game Over! Time's Up!"; 
+        Cursor.lockState = CursorLockMode.None; // Unlock the cursor    
         GameOverScreen.SetActive(true); 
         
     }
@@ -59,5 +62,8 @@ public void StartTimer()
     {
         hasStarted = true; 
     }
+    
+
+
 }
 

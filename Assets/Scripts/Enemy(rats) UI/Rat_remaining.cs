@@ -45,6 +45,7 @@ public class Rat_remaining : MonoBehaviour
         hasWon = true;
         GameWinScreen.SetActive(true);
         Time.timeScale = 0f; //pause
+        Cursor.lockState = CursorLockMode.None; // Unlock the cursor
     }
 
     public void RatRemaining()
