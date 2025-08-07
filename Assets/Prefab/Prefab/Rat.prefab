@@ -290,8 +290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7effecea20cfbbf43ab0765d424dc217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 12.5
-  shootDelay: 1.5
+  detectionRange: 10
+  shootDelay: 2
   bulletPrefab: {fileID: 2992972060221015335, guid: b5dac0cd5d14c154cb47ea7c21e46beb, type: 3}
   bulletSpawnPoint: {fileID: 8422499194294859531}
 --- !u!114 &208458468821801307
