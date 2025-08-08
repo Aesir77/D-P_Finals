@@ -916,11 +916,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: bcba9411-6f4f-4467-899e-44353bea33bb
+  cloudProjectId: db96400a-6eae-48a1-950b-c2f6620336b6
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: My project 2025-07-11_18-42-33
-  organizationId: unity_3ce34e4c5c877fa76ca2
+  projectName: D&P-Finals
+  organizationId: chimmaranon
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

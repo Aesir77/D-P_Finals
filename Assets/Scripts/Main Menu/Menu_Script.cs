@@ -6,7 +6,6 @@ using StarterAssets;
 using UnityEngine.Playables;
 using Unity.VisualScripting;
 
-
 public class Menu_Script : MonoBehaviour
 {
     #region Settings
@@ -155,15 +154,8 @@ public class Menu_Script : MonoBehaviour
     public void Quit()
     {
 
-#if UNITY_EDITOR
-        // Stop playing the scene in the Unity Editor
+Application.Quit(); // Quit the application
         audioSource.PlayOneShot(ButtonClick); // Play button click sound
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-    // Quit the application
-    Application.Quit();
-    }
-#endif
 
     }
 
@@ -176,4 +168,3 @@ public class Menu_Script : MonoBehaviour
 
     }
 }
-
