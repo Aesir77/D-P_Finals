@@ -1,69 +1,78 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class AudioControl : MonoBehaviour
 {
-    public Scrollbar musicScrollbar, inGamemusicScrollbar; 
-    public Scrollbar sfxScrollbar, inGamesfxScrollbar; 
-    public AudioSource musicAudioSource, sfxAudioSource; 
+    [Header("UI Sliders")]
+    public Slider musicSlider, inGameMusicSlider;
+    public Slider sfxSlider, inGameSFXSlider;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Audio Mixer")]
+    public AudioMixer audioMixer;
+
+    // Names of the exposed parameters in your AudioMixer
+    public string musicParam = "MusicVolume";
+    public string sfxParam = "SFXVolume";
+    public string inGameMusicParam = "InGameMusicVolume";
+    public string inGameSFXParam = "InGameSFXVolume";
+
+    // dB Range
+    private const float minDB = -15f;
+    private const float maxDB = 5f;
+
     void Start()
     {
-        float savedMusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
-        float savedSFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
-        float savedInGameMusicVolume = PlayerPrefs.GetFloat("InGameMusicVolume", 1f);
-        float savedInGameSFXVolume = PlayerPrefs.GetFloat("InGameSFXVolume", 1f);
+        // Load saved values (0 to 1)
+        float savedMusic = PlayerPrefs.GetFloat(musicParam, 0.5f);
+        float savedSFX = PlayerPrefs.GetFloat(sfxParam, 0.5f);
+        float savedInGameMusic = PlayerPrefs.GetFloat(inGameMusicParam, 0.5f);
+        float savedInGameSFX = PlayerPrefs.GetFloat(inGameSFXParam, 0.5f);
 
+        // Apply to sliders
+        musicSlider.value = savedMusic;
+        sfxSlider.value = savedSFX;
+        inGameMusicSlider.value = savedInGameMusic;
+        inGameSFXSlider.value = savedInGameSFX;
 
-        musicScrollbar.value = savedMusicVolume;
-        sfxScrollbar.value = savedSFXVolume;
+        // Apply to AudioMixer
+        SetMusicVolume(savedMusic);
+        SetSFXVolume(savedSFX);
+        SetInGameMusicVolume(savedInGameMusic);
+        SetInGameSFXVolume(savedInGameSFX);
 
-        musicAudioSource.volume = savedMusicVolume;
-        sfxAudioSource.volume = savedSFXVolume;
-
-       
+        // Add listeners
+        musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        inGameMusicSlider.onValueChanged.AddListener(SetInGameMusicVolume);
+        inGameSFXSlider.onValueChanged.AddListener(SetInGameSFXVolume);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SetMusicVolume(float value)
     {
-        
+        float dB = Mathf.Lerp(minDB, maxDB, value); // Map 0-1 to -15 to +5
+        audioMixer.SetFloat(musicParam, dB);
+        PlayerPrefs.SetFloat(musicParam, value);
     }
 
-    public void SetmusicVolume(float value)
+    private void SetSFXVolume(float value)
     {
-        if ( musicAudioSource != null)
-        {
-            musicAudioSource.volume = value;
-            PlayerPrefs.SetFloat("MusicVolume", value); // Save it
-        }
+        float dB = Mathf.Lerp(minDB, maxDB, value);
+        audioMixer.SetFloat(sfxParam, dB);
+        PlayerPrefs.SetFloat(sfxParam, value);
     }
 
-    public void SetsfxVolume(float value)
+    private void SetInGameMusicVolume(float value)
     {
-        if (sfxAudioSource != null)
-        {
-            sfxAudioSource.volume = value;
-            PlayerPrefs.SetFloat("SFXVolume", value); // Save it
-        }
+        float dB = Mathf.Lerp(minDB, maxDB, value);
+        audioMixer.SetFloat(inGameMusicParam, dB);
+        PlayerPrefs.SetFloat(inGameMusicParam, value);
     }
 
-    public void SetInGameMusicVolume(float value)
+    private void SetInGameSFXVolume(float value)
     {
-        if (musicAudioSource != null)
-        {
-            musicAudioSource.volume = value;
-            PlayerPrefs.SetFloat("InGameMusicVolume", value); // Save it
-        }
-    }
-
-    public void SetInGameSFXVolume(float value)
-    {
-        if (sfxAudioSource != null)
-        {
-            sfxAudioSource.volume = value;
-            PlayerPrefs.SetFloat("InGameSFXVolume", value); // Save it
-        }
+        float dB = Mathf.Lerp(minDB, maxDB, value);
+        audioMixer.SetFloat(inGameSFXParam, dB);
+        PlayerPrefs.SetFloat(inGameSFXParam, value);
     }
 }
