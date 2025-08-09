@@ -4,7 +4,7 @@ using TMPro;
 public class Player_Health : MonoBehaviour
 {
     public int Maximum_Health = 100;
-    private int currentHealth;
+    public int currentHealth;
     public GameObject player;
     public TimeLeft GameOverScreen;
 

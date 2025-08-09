@@ -7,6 +7,7 @@ public class Rat_remaining : MonoBehaviour
     public TMP_Text ratsRemaining;
     public GameObject GameWinScreen;
     public GameObject PlayerUI;
+    public int RatCount;
 
     private bool hasWon = false;
     private bool gameStarted = false;
@@ -21,28 +22,12 @@ public class Rat_remaining : MonoBehaviour
     {
         if (!gameStarted) return;
         {
-
-            GameObject[] rats = GameObject.FindGameObjectsWithTag(EnemyTag);
-            int RatCount = rats.Length;
-
-            if (ratsRemaining != null)
-            {
-                ratsRemaining.text = "Rats Remaining: " + RatCount.ToString();
-            }
-            else
-            {
-                Debug.LogWarning("ratsRemaining TextMeshProUGUI is not assigned in the inspector.");
-            }
-
-            if (RatCount <= 0 && !hasWon)
-            {
-                GameWin();
-            }
+            RatLeft();
         }
     }
 
 
-    void GameWin()
+    public void GameWin()
     {
         PlayerUI.SetActive(false); // Hide the player UI
         hasWon = true;
@@ -56,4 +41,24 @@ public class Rat_remaining : MonoBehaviour
         gameStarted = true;
     }
 
+    public void RatLeft()
+    {
+        GameObject[] rats = GameObject.FindGameObjectsWithTag(EnemyTag);
+        RatCount = rats.Length;
+
+        if (ratsRemaining != null)
+        {
+            ratsRemaining.text = "Rats Remaining: " + RatCount.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("ratsRemaining TextMeshProUGUI is not assigned in the inspector.");
+        }
+
+        if (RatCount <= 0 && !hasWon)
+        {
+            GameWin();
+        }
+    }
 }
+
